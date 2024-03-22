@@ -1,7 +1,7 @@
 package net.weg.topcar.model.usuarios;
 
 import net.weg.topcar.dao.IBanco;
-import net.weg.topcar.model.Automovel;
+import net.weg.topcar.model.automoveis.Automovel;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 
 public class Vendedor extends Cliente implements IVendedor {
@@ -9,7 +9,7 @@ public class Vendedor extends Cliente implements IVendedor {
     private Double salario;
     private Double comissoes;
 
-    public Vendedor(String nome, Long cpf, String senha, Integer idade, Double salario) {
+    public Vendedor(String nome, Long cpf, String senha, Long idade, Double salario) {
         super(nome, cpf, senha, idade);
         this.salario = salario;
     }
@@ -42,6 +42,9 @@ public class Vendedor extends Cliente implements IVendedor {
         return ("R$ " + (salario + comissoes));
     }
 
+    protected String verPagamentoComNome() {
+        return this.getNome() + " : " + this.verPagamento();
+    }
 
     @Override
     public String toString() {

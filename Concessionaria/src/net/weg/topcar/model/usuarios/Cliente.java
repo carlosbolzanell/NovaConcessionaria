@@ -1,7 +1,7 @@
 package net.weg.topcar.model.usuarios;
 
 import net.weg.topcar.dao.IBanco;
-import net.weg.topcar.model.Automovel;
+import net.weg.topcar.model.automoveis.Automovel;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 
 import java.util.ArrayList;
@@ -12,9 +12,9 @@ public class Cliente implements ICliente{
     private String nome;
     private Long cpf;
     private String senha;
-    private Integer idade;
+    private Long idade;
     private final ArrayList<Automovel> listaAutomoveis = new ArrayList<Automovel>();
-    public Cliente(String nome, Long cpf, String senha, Integer idade) {
+    public Cliente(String nome, Long cpf, String senha, Long idade) {
         this.nome = nome;
         this.cpf = cpf;
         this.senha = senha;
@@ -47,7 +47,7 @@ public class Cliente implements ICliente{
         return senha;
     }
 
-    public Integer getIdade() {
+    public Long getIdade() {
         return idade;
     }
 

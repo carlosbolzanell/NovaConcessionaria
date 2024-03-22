@@ -1,6 +1,6 @@
 package net.weg.topcar.dao;
 
-import net.weg.topcar.model.Automovel;
+import net.weg.topcar.model.automoveis.Automovel;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 
 import java.util.Collections;

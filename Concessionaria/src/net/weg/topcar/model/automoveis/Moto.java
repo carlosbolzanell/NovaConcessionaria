@@ -1,7 +1,5 @@
 package net.weg.topcar.model.automoveis;
 
-import net.weg.topcar.model.Automovel;
-
 public class Moto extends Automovel {
     private String partida;
     private int cilindradas;
@@ -22,18 +20,7 @@ public class Moto extends Automovel {
 
     @Override
     public String toString() {
-        return "Moto {" +
-                "\nCódigo: " + this.getCODIGO() +
-                "\nModelo: " + this.getModelo() +
-                "\nAno: " + this.getAno() +
-                "\nMarca: " + this.getMarca() +
-                "\nTipo de combústivel: " + this.getTipoCombustivel() +
-                "\nPreço: " + this.getPreco() +
-                "\nQuilometragem: " + this.getQuilometragem() +
-                "\nPlaca: " + this.getPlaca() +
-                "\nCor: " + this.getCor() +
-                "\nStatus: " + (this.isComprado() ? "Comprado" : "À venda") +
-                "\nEstado: " + this.getEstado() +
+        return super.toString() +
                 "\nMarcha: " + partida +
                 "\nTipo da carroceria: " + cilindradas + " }\n";
     }

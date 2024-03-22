@@ -1,10 +1,11 @@
 package net.weg.topcar.model.usuarios;
 
 import net.weg.topcar.dao.IBanco;
-import net.weg.topcar.model.Automovel;
+import net.weg.topcar.model.automoveis.Automovel;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Gerente extends Vendedor implements IGerente{
 
@@ -29,96 +30,94 @@ public class Gerente extends Vendedor implements IGerente{
                 """;
     }
 
-    public String editarUsuario(Long cpf, Cliente clienteEditado, IBanco<Cliente, Long> banco) throws ObjetoNaoEncontradoException {
-        banco.alterar(cpf, clienteEditado);
+    public String editarUsuario( Cliente clienteEditado, IBanco<Cliente, Long> banco) throws ObjetoNaoEncontradoException {
+        banco.alterar(clienteEditado.getCpf(), clienteEditado);
         return "Usuário Editado!";
     }
-
-//    @Override
-//    public void venderAutomovel(Automovel automovel, Cliente cliente) {
-//        cliente.adicionarProprioAutomovel(automovel);
-//        this.setComissoes(automovel.getPreco() * 0.02);
-//    }
-
-    public void registrarAutomovel(Automovel automovel) {
-        automovel.adicionarAutomovel();
+    public String registrarAutomovel(Automovel automovel, IBanco<Automovel, String> banco) {
+        banco.adicionar(automovel);
+        return "Automóvel registrado!";
     }
 
-    public void removerAutomovel(Automovel automovel) {
-        automovel.removerAutomovel();
+    public String removerAutomovel(String codigo, IBanco<Automovel, String> banco) throws ObjetoNaoEncontradoException {
+        banco.remover(codigo);
+        return "Automóvel removido";
     }
 
-    public void editarAutomovel(Automovel automovelAntigo,
-                                Automovel automovelNovo) {
-        automovelAntigo.editarAutomovel(automovelNovo);
+    /**
+     * Método responsável por executar a ação de ediçao de um automóvel em nível de repositório (DAO).
+     * O parametro de automóvel recebe as informações editadas do automóvel, já o parametro
+     * de banco recebe qual o repositório que manipula objetos do tipo Automóvel
+     * O id do automóvel permanecerá o mesmo, por esse motivo é possível pegar o mesmo id
+     * presente no objeto editado
+     * @param automovel
+     * @param banco
+     * @throws ObjetoNaoEncontradoException
+     */
+    public String editarAutomovel(Automovel automovel,
+                                IBanco<Automovel, String> banco) throws ObjetoNaoEncontradoException {
+        banco.alterar(automovel.getCODIGO(), automovel);
+        return "Automóvel alterado";
     }
 
-    public void editarPreco(Automovel automovel, double preco) {
+    public String editarPreco(String codigo, Double preco, IBanco<Automovel, String> banco) throws ObjetoNaoEncontradoException {
+        Automovel automovel = banco.buscarUm(codigo);
         automovel.setPreco(preco);
+        banco.alterar(codigo, automovel);
+        return "Preço do automóvel editado";
     }
 
-    public void registrarUsuario(Cliente cliente) {
-        cliente.adicionarUsuario();
-    }
-
-    public String removerUsuario(String cpf) {
-        Cliente clienteRemover = Cliente.procurarUsuario(cpf);
-        if (clienteRemover == null) {
-            return ("Usuário não encontrado!");
-        } else if (clienteRemover instanceof Gerente) {
-            return ("O usuário pesquisado é um gerente! Impossível fazer a remoção!");
+    public String registrarUsuario(Cliente cliente, IBanco<Cliente, Long> banco) {
+        if(!(cliente instanceof Gerente)){
+            banco.adicionar(cliente);
+            return "Usuário registrado";
         }
-        clienteRemover.removerUsuario();
-        return ("Usuário removido!");
+        throw new RuntimeException("Ação não autorizada!");
     }
 
-//    public void editarUsuario(Usuario usuarioAntigo, Usuario usuarioNovo) {
-//        usuarioAntigo.editarUsuario(usuarioNovo);
-//    }
+    public String removerUsuario(Long cpf, IBanco<Cliente, Long> banco) throws ObjetoNaoEncontradoException {
+        Cliente clienteRemover = banco.buscarUm(cpf);
+        if (!(clienteRemover instanceof Gerente)) {
+            banco.remover(clienteRemover.getCpf());
+            return ("Usuário removido!");
+        }
+        throw new RuntimeException("Ação não autorizada");
+    }
 
-    public ArrayList<Vendedor> verVendedores() {
-        ArrayList<Vendedor> listaVendedores = new ArrayList<Vendedor>();
-        for (Cliente cliente : getListaUsuarios()) {
-            if (cliente instanceof Vendedor vendedor) {
+    public List<Vendedor> verVendedores(IBanco<Cliente, Long> banco) {
+//        List<Cliente> listaVendedores = banco.buscarTodos();
+//        listaVendedores.removeIf(cliente ->  !(cliente instanceof Vendedor));
+        List<Cliente> listaClientes = banco.buscarTodos();
+        List<Vendedor> listaVendedores = new ArrayList<>();
+        listaClientes.forEach(cliente -> {
+            if(cliente instanceof Vendedor vendedor){
                 listaVendedores.add(vendedor);
             }
-        }
+        });
         return listaVendedores;
     }
 
-    public ArrayList<net.weg.topcar.model.usuarios.Cliente> verClientes() {
-        ArrayList<net.weg.topcar.model.usuarios.Cliente> listaClientes = new ArrayList<net.weg.topcar.model.usuarios.Cliente>();
-
-        for (Cliente usuario : getListaUsuarios()) {
-            if (usuario instanceof net.weg.topcar.model.usuarios.Cliente cliente) {
-                listaClientes.add(cliente);
-            }
-        }
-
-        return listaClientes;
+    public List<Cliente> verClientes(IBanco<Cliente, Long> banco) {
+        return banco.buscarTodos();
     }
 
-    public ArrayList<String> verPagamentoVendedores() {
-        ArrayList<String> listaPagamentos = new ArrayList<String>();
-
-        for (Vendedor vendedor : verVendedores()) {
-            listaPagamentos.add(verPagamentoVendedor(vendedor));
+    public List<String> verPagamentoVendedores(IBanco<Cliente, Long> banco) {
+        List<String> listaPagamentos = new ArrayList<>();
+        for (Vendedor vendedor : verVendedores(banco)) {
+            listaPagamentos.add(vendedor.verPagamentoComNome());
         }
-
         return listaPagamentos;
     }
-
-    public String verPagamentoVendedor(Vendedor vendedor) {
-        return vendedor.getNome() + " : " + vendedor.verPagamento();
+    public String verPagamentoVendedor(Long cpf, IBanco<Cliente, Long> banco) throws ObjetoNaoEncontradoException {
+        Cliente cliente = banco.buscarUm(cpf);
+        if(cliente instanceof Vendedor vendedor){
+            return vendedor.verPagamentoComNome();
+        }
+        throw new RuntimeException("O usuário informado não é um vendedor!");
     }
 
     @Override
     public String toString() {
-        return "Gerente {" +
-                "\nNome: " + getNome() +
-                "\nCPF: " + getCpf() +
-                "\nIdade: " + getIdade() +
-                "\nSalário: R$ " + getSalario() +
-                "\nComissões: R$ " + getComissoes() + " }\n";
+        return super.toString();
     }
 }

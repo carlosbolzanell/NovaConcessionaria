@@ -1,11 +1,6 @@
-package net.weg.topcar.model;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+package net.weg.topcar.model.automoveis;
 
 public abstract class Automovel {
-    private static ArrayList<Automovel> listaAutomoveis = new ArrayList<Automovel>();
     private final String CODIGO;
     private String modelo;
     private int ano;
@@ -38,10 +33,6 @@ public abstract class Automovel {
 
     public void mudarStatus() {
         this.comprado = true;
-    }
-
-    public static List<Automovel> getListaAutomoveis() {
-        return Collections.unmodifiableList(listaAutomoveis);
     }
 
     public String getCODIGO() {
@@ -88,27 +79,18 @@ public abstract class Automovel {
         return estado;
     }
 
-    public static Automovel procurarAutomovel(String codigo ) {
-        for (Automovel automovel : listaAutomoveis) {
-            if (automovel.CODIGO.equals(codigo)) {
-                return automovel;
-            }
-        }
-
-        return null;
-    }
-
-    public void adicionarAutomovel() {
-        listaAutomoveis.add(this);
-    }
-
-    public void removerAutomovel() {
-        listaAutomoveis.remove(this);
-    }
-
-    public void editarAutomovel(Automovel novoAutomovel) {
-        listaAutomoveis.set(
-                listaAutomoveis.indexOf(this),
-                novoAutomovel);
+    @Override
+    public String toString() {
+        return "Código: " + this.getCODIGO() +
+                "\nModelo: " + this.getModelo() +
+                "\nAno: " + this.getAno() +
+                "\nMarca: " + this.getMarca() +
+                "\nTipo de combústivel: " + this.getTipoCombustivel() +
+                "\nPreço: " + this.getPreco() +
+                "\nQuilometragem: " + this.getQuilometragem() +
+                "\nPlaca: " + this.getPlaca() +
+                "\nCor: " + this.getCor() +
+                "\nStatus: " + (this.isComprado() ? "Comprado" : "À venda") +
+                "\nEstado: " + this.getEstado();
     }
 }

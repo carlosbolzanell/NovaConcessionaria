@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class BancoUsuario implements
-        IBanco<Cliente, String> {
+        IBanco<Cliente, Long> {
     private List<Cliente> listaClientes;
 
     public List<Cliente> buscarTodos() {
@@ -15,27 +15,27 @@ public class BancoUsuario implements
                 listaClientes);
     }
 
-    public Cliente buscarUm(String cpf)
+    public Cliente buscarUm(Long cpf)
             throws ObjetoNaoEncontradoException {
         for (Cliente cliente : listaClientes) {
             if (cliente.getCpf().equals(cpf)) {
                 return cliente;
             }
         }
-        throw new ObjetoNaoEncontradoException(cpf);
+        throw new ObjetoNaoEncontradoException(cpf.toString());
     }
 
     public void adicionar(Cliente cliente) {
         listaClientes.add(cliente);
     }
 
-    public void remover(String cpf)
+    public void remover(Long cpf)
             throws ObjetoNaoEncontradoException {
         Cliente cliente = buscarUm(cpf);
         listaClientes.remove(cliente);
     }
 
-    public void alterar(String cpf,
+    public void alterar(Long cpf,
                         Cliente novoCliente)
             throws ObjetoNaoEncontradoException {
         Cliente cliente = buscarUm(cpf);
