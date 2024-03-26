@@ -3,17 +3,17 @@ package net.weg.topcar.model.automoveis;
 public abstract class Automovel {
     private final String CODIGO;
     private String modelo;
-    private int ano;
+    private Long ano;
     private String marca;
     private String tipoCombustivel;
-    private double preco;
-    private int quilometragem;
+    private Double preco;
+    private Double quilometragem;
     private String placa;
     private String cor;
-    private boolean comprado;
-    private String estado;
+    private Boolean comprado;
+    private Boolean novo;
 
-    public Automovel(String CODIGO, String modelo, int ano, String marca, String tipoCombustivel, double preco, int quilometragem, String placa, String cor, String estado) {
+    public Automovel(String CODIGO, String modelo, Long ano, String marca, String tipoCombustivel, Double preco, Double quilometragem, String placa, String cor, Boolean novo) {
         this.CODIGO = CODIGO;
         this.modelo = modelo;
         this.ano = ano;
@@ -23,7 +23,7 @@ public abstract class Automovel {
         this.quilometragem = quilometragem;
         this.placa = placa;
         this.cor = cor;
-        this.estado = estado;
+        this.novo = novo;
         this.comprado = false;
     }
 
@@ -43,7 +43,7 @@ public abstract class Automovel {
         return modelo;
     }
 
-    public int getAno() {
+    public Long getAno() {
         return ano;
     }
 
@@ -55,11 +55,11 @@ public abstract class Automovel {
         return tipoCombustivel;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
     }
 
-    public int getQuilometragem() {
+    public Double getQuilometragem() {
         return quilometragem;
     }
 
@@ -75,8 +75,8 @@ public abstract class Automovel {
         return comprado;
     }
 
-    public String getEstado() {
-        return estado;
+    public Boolean isNovo() {
+        return novo;
     }
 
     @Override
@@ -91,6 +91,6 @@ public abstract class Automovel {
                 "\nPlaca: " + this.getPlaca() +
                 "\nCor: " + this.getCor() +
                 "\nStatus: " + (this.isComprado() ? "Comprado" : "À venda") +
-                "\nEstado: " + this.getEstado();
+                "\nEstado: " + this.isNovo();
     }
 }

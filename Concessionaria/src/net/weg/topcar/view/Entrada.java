@@ -6,10 +6,10 @@ import java.util.Scanner;
 public abstract class Entrada<T>{
     protected final Scanner sc = new Scanner(System.in);
 
-    public T leiaComValidacaoEValidacao(String mensagem, Saida saida){
+    public T leiaComSaidaEValidacao(String mensagem, Saida saida){
         T valor;
         do{
-            valor = leiaComEntrada(mensagem,saida);
+            valor = leiaComSaida(mensagem,saida);
         }while (!validaEntrada(valor));
         return valor;
     }
@@ -22,7 +22,7 @@ public abstract class Entrada<T>{
     }
     protected abstract boolean validaEntrada( T valor);
     public abstract T leia() throws InputMismatchException;
-    public T leiaComEntrada(String texto, Saida saida) throws InputMismatchException {
+    public T leiaComSaida(String texto, Saida saida) throws InputMismatchException {
         saida.escreva(texto);
         return leia();
     }

@@ -1,7 +1,9 @@
 package net.weg.topcar.dao;
 
+import net.weg.topcar.model.exceptions.PermissaoNegadasException;
 import net.weg.topcar.model.usuarios.Cliente;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
+import net.weg.topcar.model.usuarios.IGerente;
 
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +34,21 @@ public class BancoUsuario implements
     public void remover(Long cpf)
             throws ObjetoNaoEncontradoException {
         Cliente cliente = buscarUm(cpf);
-        listaClientes.remove(cliente);
+        if(!(cliente instanceof IGerente)){
+            listaClientes.remove(cliente);
+        }else {
+            throw new PermissaoNegadasException("usuário gerente");
+        }
+    }
+
+    @Override
+    public Boolean existe(Long cpf) {
+        try {
+            buscarUm(cpf);
+            return true;
+        } catch (ObjetoNaoEncontradoException e) {
+            return false;
+        }
     }
 
     public void alterar(Long cpf,

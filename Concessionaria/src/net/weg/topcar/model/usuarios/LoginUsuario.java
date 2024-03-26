@@ -12,12 +12,12 @@ public class LoginUsuario {
             BancoUsuario bancoUsuario){
         this.bancoUsuario = bancoUsuario;
     }
-    public Cliente login(String cpf,
+    public Cliente login(Long cpf,
                          String senha)
             throws ObjetoNaoEncontradoException,
             SenhaIncorretaException {
         this.cliente = this.bancoUsuario
-                .procurarUsuario(cpf);
+                .buscarUm(cpf);
         validarSenha(senha);
         return cliente;
     }

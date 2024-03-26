@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Gerente extends Vendedor implements IGerente{
 
-    public Gerente(String nome, Long cpf, String senha, Integer idade, Double salario) {
+    public Gerente(String nome, Long cpf, String senha, Long idade, Double salario) {
         super(nome, cpf, senha, idade, salario);
     }
 

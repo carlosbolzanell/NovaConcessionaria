@@ -10,4 +10,5 @@ public interface ICliente {
     List<Automovel> verAutomoveis(IBanco<Automovel, String> banco);
     List<Automovel> verMeusAutomoveis();
     Automovel verAutomovel(String codigo, IBanco<Automovel, String> banco) throws ObjetoNaoEncontradoException;
+    Long getCpf();
 }

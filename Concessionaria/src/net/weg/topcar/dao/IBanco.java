@@ -11,6 +11,7 @@ public interface IBanco<T,ID> {
     void adicionar(T novo);
     void remover(ID id)
             throws ObjetoNaoEncontradoException;
+    Boolean existe(ID id);
     void alterar(ID id,
                  T novo)
             throws ObjetoNaoEncontradoException;

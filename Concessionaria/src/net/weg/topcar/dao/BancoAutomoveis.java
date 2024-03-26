@@ -35,6 +35,16 @@ public class BancoAutomoveis
         listaAutomoveis.remove(automovel);
     }
 
+    @Override
+    public Boolean existe(String codigo) {
+        try {
+            buscarUm(codigo);
+            return true;
+        } catch (ObjetoNaoEncontradoException e) {
+            return false;
+        }
+    }
+
     public void alterar(String cpf,
                         Automovel novoUsuario)
             throws ObjetoNaoEncontradoException {
