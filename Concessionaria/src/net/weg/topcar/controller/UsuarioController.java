@@ -241,10 +241,14 @@ public class UsuarioController {
         return entradaDouble.leiaComSaidaEValidacao("Salário: ", saida);
     }
     private Long selecionaTipoDeUsuario(){
-        return entradaInteiro.leiaComSaidaEValidacao("""
+        Long entrada;
+        do{
+           entrada = entradaInteiro.leiaComSaidaEValidacao("""
                         Qual o perfil de usuário você deseja cadastrar?
                         1- Vendedor
                         2- Cliente""", saida);
+        }while (entrada<2);
+        return entrada;
     }
     private void cadastroVendedor(String nome, Long cpf, String senha, Long idade, Double salario){
         bancoUsuario.adicionar(new Vendedor(nome, cpf, senha, idade, salario));

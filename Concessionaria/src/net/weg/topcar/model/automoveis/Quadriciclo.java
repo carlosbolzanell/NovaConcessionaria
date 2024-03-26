@@ -1,8 +1,8 @@
 package net.weg.topcar.model.automoveis;
 
 public class Quadriciclo extends Automovel {
-    public Quadriciclo(String CODIGO, String modelo, int ano, String marca, String tipoCombustivel, double preco, int quilometragem, String placa, String cor, String estado) {
-        super(CODIGO, modelo, ano, marca, tipoCombustivel, preco, quilometragem, placa, cor, estado);
+    public Quadriciclo(String CODIGO, String modelo, Long ano, String marca, String tipoCombustivel, Double preco, Double quilometragem, String placa, String cor, Boolean novo) {
+        super(CODIGO, modelo, ano, marca, tipoCombustivel, preco, quilometragem, placa, cor, novo);
     }
 
     @Override
@@ -18,6 +18,6 @@ public class Quadriciclo extends Automovel {
                 "\nPlaca: " + this.getPlaca() +
                 "\nCor: " + this.getCor() +
                 "\nStatus: " + (this.isComprado() ? "Comprado" : "À venda") +
-                "\nEstado: " + this.getEstado() + " }\n";
+                "\nNovo: " + this.isNovo() + " }\n";
     }
 }

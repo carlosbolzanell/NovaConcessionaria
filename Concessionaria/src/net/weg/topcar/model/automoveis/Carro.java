@@ -4,8 +4,8 @@ public class Carro extends Automovel {
     private String marcha;
     private String tipoCarroceria;
 
-    public Carro(String CODIGO, String modelo, int ano, String marca, String tipoCombustivel, double preco, int quilometragem, String placa, String cor, String estado, String marcha, String tipoCarroceria) {
-        super(CODIGO, modelo, ano, marca, tipoCombustivel, preco, quilometragem, placa, cor, estado);
+    public Carro(String CODIGO, String modelo, Long ano, String marca, String tipoCombustivel, Double preco, Double quilometragem, String placa, String cor, Boolean novo, String marcha, String tipoCarroceria) {
+        super(CODIGO, modelo, ano, marca, tipoCombustivel, preco, quilometragem, placa, cor, novo);
         this.marcha = marcha;
         this.tipoCarroceria = tipoCarroceria;
     }
