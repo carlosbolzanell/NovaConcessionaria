@@ -3,12 +3,17 @@ package net.weg.topcar.dao;
 import net.weg.topcar.model.automoveis.Automovel;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class BancoAutomoveis
     implements IBanco<Automovel, String> {
     private List<Automovel> listaAutomoveis;
+
+    public BancoAutomoveis(){
+        this.listaAutomoveis = new ArrayList<>();
+    }
 
     public List<Automovel> buscarTodos() {
         return Collections.unmodifiableList(
@@ -45,13 +50,13 @@ public class BancoAutomoveis
         }
     }
 
-    public void alterar(String cpf,
-                        Automovel novoUsuario)
+    public void alterar(String codigo,
+                        Automovel novoAutomovel)
             throws ObjetoNaoEncontradoException {
-        Automovel automovel = buscarUm(cpf);
+        Automovel automovel = buscarUm(codigo);
         listaAutomoveis.set(
                 listaAutomoveis.indexOf(automovel),
-                novoUsuario);
+                novoAutomovel);
     }
 
 }

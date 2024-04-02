@@ -5,12 +5,17 @@ import net.weg.topcar.model.usuarios.Cliente;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 import net.weg.topcar.model.usuarios.IGerente;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class BancoUsuario implements
         IBanco<Cliente, Long> {
     private List<Cliente> listaClientes;
+
+    public BancoUsuario(){
+        this.listaClientes = new ArrayList<>();
+    }
 
     public List<Cliente> buscarTodos() {
         return Collections.unmodifiableList(

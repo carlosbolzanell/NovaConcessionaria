@@ -14,13 +14,19 @@ import java.util.List;
 public class UsuarioController {
 
     public static Cliente usuarioLogado = null;
-    private IBanco<Cliente, Long> bancoUsuario = new BancoUsuario();
-    private IBanco<Automovel, String> bancoAutomovel = new BancoAutomoveis();
+    private IBanco<Cliente, Long> bancoUsuario;
+    private IBanco<Automovel, String> bancoAutomovel;
     private final Entrada<Double> entradaDouble = new EntradaDecimal();
     private final Entrada<String> entradaString = new EntradaTexto();
+    private final Autenticacao autenticacao;
     private final Entrada<Long> entradaInteiro = new EntradaInteiro();
     private final Saida saida = new Saida();
 
+    public UsuarioController(BancoUsuario bancoUsuario, BancoAutomoveis bancoAutomoveis){
+        this.bancoUsuario = bancoUsuario;
+        this.bancoAutomovel = bancoAutomoveis;
+        this.autenticacao = new Autenticacao(bancoUsuario);
+    }
     //CLIENTE
     public void cadastroUsuario() {
         try {
@@ -29,15 +35,18 @@ public class UsuarioController {
             String nome = entradaNome();
             Long idade = entradaIdade();
             String senha = entradaSenha();
+            Cliente clienteNovo = null;
             if (usuarioLogado instanceof IGerente) {
                 Long escolha = selecionaTipoDeUsuario();
                 if (escolha == 1) {
                     Double salario = entradaSalario();
-                    cadastroVendedor(nome, cpf, senha, idade, salario);
-                    return;
+                    clienteNovo = new Vendedor(nome, cpf, senha, idade, salario);
                 }
             }
-            cadastroCliente(nome, cpf, senha, idade);
+            if(clienteNovo == null){
+                clienteNovo = new Cliente(nome, cpf, senha, idade);
+            }
+            bancoUsuario.adicionar(clienteNovo);
         }catch(UsuarioExistenteException e){
             saida.escrevaln(e.getMessage());
         }
@@ -67,7 +76,7 @@ public class UsuarioController {
             Automovel automovel = bancoAutomovel.buscarUm(codigo);
             vendedor.vender(automovel, cliente);
             atualizarElvolvidosNaVenda(cliente, vendedor, automovel);
-        } catch (ObjetoNaoEncontradoException | FalhaNaCompraException | PermissaoNegadasException e) {
+        } catch (ObjetoNaoEncontradoException | FalhaNaCompraException e) {
             saida.escreva(e.getMessage());
         }
     }
@@ -109,12 +118,16 @@ public class UsuarioController {
             if(!(cliente instanceof Gerente)) {
                 String nome = entradaNome(cliente.getNome());
                 Long idade = entradaIdade(cliente.getIdade());
+                Cliente clienteEditado;
                 if (cliente instanceof Vendedor vendedor) {
                     Double salario = entradaSalario(vendedor.getSalario());
-                    bancoUsuario.alterar(vendedor.getCpf(), new Vendedor(nome, cliente.getCpf(), cliente.getSenha(), idade, salario));
+                    clienteEditado = new Vendedor(nome, cliente.getCpf(), cliente.getSenha(), idade, salario);
                     return;
                 }
-                bancoUsuario.alterar(cliente.getCpf(), new Cliente(nome, cliente.getCpf(), cliente.getSenha(), idade));
+                else {
+                    clienteEditado = new Cliente(nome, cliente.getCpf(), cliente.getSenha(), idade);
+                }
+                bancoUsuario.alterar(cliente.getCpf(), clienteEditado);
             }
         } catch (ObjetoNaoEncontradoException | PermissaoNegadasException e) {
             saida.escrevaln(e.getMessage());
@@ -152,6 +165,13 @@ public class UsuarioController {
         } catch (ObjetoNaoEncontradoException | TipoDeUsuarioInvalidoException | PermissaoNegadasException e) {
             saida.escrevaln(e.getMessage());
         }
+    }
+    public Cliente login () throws ObjetoNaoEncontradoException {
+        Long cpf = entradaCPF();
+        String senha = entradaString.leiaComSaidaEValidacao("Senha: ", saida);
+
+        usuarioLogado = autenticacao.login(cpf, senha);
+        return usuarioLogado;
     }
 
     private Vendedor isVendedor() {
