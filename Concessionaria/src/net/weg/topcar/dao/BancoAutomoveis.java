@@ -30,8 +30,9 @@ public class BancoAutomoveis
         throw new ObjetoNaoEncontradoException(codigo);
     }
 
-    public void adicionar(Automovel automovel) {
+    public Automovel adicionar(Automovel automovel) {
         listaAutomoveis.add(automovel);
+        return automovel;
     }
 
     public void remover(String codigo)

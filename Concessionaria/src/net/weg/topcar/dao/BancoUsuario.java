@@ -32,8 +32,9 @@ public class BancoUsuario implements
         throw new ObjetoNaoEncontradoException(cpf.toString());
     }
 
-    public void adicionar(Cliente cliente) {
+    public Cliente adicionar(Cliente cliente) {
         listaClientes.add(cliente);
+        return cliente;
     }
 
     public void remover(Long cpf)

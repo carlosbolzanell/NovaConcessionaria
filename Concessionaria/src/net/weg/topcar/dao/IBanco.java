@@ -8,7 +8,7 @@ public interface IBanco<T,ID> {
     List<T> buscarTodos();
     T buscarUm(ID id)
             throws ObjetoNaoEncontradoException;
-    void adicionar(T novo);
+    T adicionar(T novo);
     void remover(ID id)
             throws ObjetoNaoEncontradoException;
     Boolean existe(ID id);
