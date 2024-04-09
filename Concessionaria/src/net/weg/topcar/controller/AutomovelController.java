@@ -1,20 +1,18 @@
 package net.weg.topcar.controller;
 
-import net.weg.topcar.dao.BancoAutomoveis;
-import net.weg.topcar.dao.IBanco;
 import net.weg.topcar.model.automoveis.Automovel;
 import net.weg.topcar.model.automoveis.Carro;
 import net.weg.topcar.model.automoveis.Moto;
 import net.weg.topcar.model.automoveis.Quadriciclo;
 import net.weg.topcar.model.exceptions.AutomovelExistenteException;
+import net.weg.topcar.model.exceptions.FalhaNaCompraException;
 import net.weg.topcar.model.exceptions.ObjetoNaoEncontradoException;
 import net.weg.topcar.model.exceptions.PermissaoNegadasException;
 import net.weg.topcar.model.usuarios.Cliente;
 import net.weg.topcar.model.usuarios.IGerente;
 import net.weg.topcar.service.AutomovelService;
-import net.weg.topcar.view.*;
+import net.weg.topcar.view.entrada_saida.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AutomovelController {
@@ -142,5 +140,8 @@ public class AutomovelController {
         if(!(usuarioLogado instanceof IGerente)){
             throw new PermissaoNegadasException("Usuário não é um gerente");
         }
+    }
+
+    public Automovel buscarAutomovel(String codigo) throws FalhaNaCompraException {
     }
 }

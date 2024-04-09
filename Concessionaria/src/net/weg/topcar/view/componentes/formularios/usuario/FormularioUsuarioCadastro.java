@@ -1,10 +1,10 @@
-package net.weg.topcar.view;
+package net.weg.topcar.view.componentes.formularios.usuario;
 
-import net.weg.topcar.controller.UsuarioController;
 import net.weg.topcar.model.exceptions.UsuarioExistenteException;
 import net.weg.topcar.model.usuarios.Cliente;
 import net.weg.topcar.model.usuarios.IGerente;
 import net.weg.topcar.model.usuarios.Vendedor;
+import net.weg.topcar.view.UsuarioAutenticadoFront;
 
 public class FormularioUsuarioCadastro extends FormularioUsuario{
     public void cadastroUsuario() {
@@ -15,7 +15,7 @@ public class FormularioUsuarioCadastro extends FormularioUsuario{
             Long idade = entradaIdade();
             String senha = entradaSenha();
             Cliente clienteNovo = null;
-            if (usuarioAutenticado.getUsuarioAutenticado() instanceof IGerente) {
+            if (UsuarioAutenticadoFront.getUsuario() instanceof IGerente) {
                 Long escolha = selecionaTipoDeUsuario();
                 if (escolha == 1) {
                     Double salario = entradaSalario();
