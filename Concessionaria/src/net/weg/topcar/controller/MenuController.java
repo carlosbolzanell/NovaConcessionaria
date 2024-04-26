@@ -45,8 +45,8 @@ public class MenuController {
             }
             case 1 -> usuarioController.cadastroUsuario();
             case 2 -> login();
-            case 3 -> automovelController.verAutomoveis();
-            case 4 -> automovelController.verAutomovel();
+            case 3 -> automovelController.buscarAutomoveisDisponiveis();
+            case 4 -> automovelController.buscarAutomovel();
             default -> saida.escreva("Opção inválida!\nDigite novamente: ");
         }
     }
@@ -66,8 +66,8 @@ public class MenuController {
             try {
                 switch (escolha) {
                     case 0 -> usuarioLogado = null;
-                    case 1 -> automovelController.verAutomoveis();
-                    case 2 -> automovelController.verAutomovel();
+                    case 1 -> automovelController.buscarAutomoveisDisponiveis();
+                    case 2 -> automovelController.buscarAutomovel();
                     case 3 -> usuarioController.verMeusAutomoveis();
                     case 4 -> usuarioController.vender();
                     case 5 -> usuarioController.verUsuario();
