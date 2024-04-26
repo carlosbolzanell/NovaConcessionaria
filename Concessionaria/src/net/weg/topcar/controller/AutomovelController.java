@@ -16,13 +16,7 @@ import net.weg.topcar.view.entrada_saida.*;
 import java.util.List;
 
 public class AutomovelController {
-    public static Cliente usuarioLogado = null;
     private final AutomovelService automovelService;
-    private final Entrada<Double> entradaDouble = new EntradaDecimal();
-    private final Entrada<String> entradaString = new EntradaTexto();
-    private final Entrada<Long> entradaInteiro = new EntradaInteiro();
-    private final Saida saida = new Saida();
-
     public AutomovelController(AutomovelService automovelService){
         this.automovelService = automovelService;
     }

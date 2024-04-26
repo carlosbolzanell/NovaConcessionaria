@@ -39,16 +39,16 @@ public class UsuarioController {
             throw new UsuarioExistenteException(cpf);
         }
     }
-    private Vendedor isVendedor() throws PermissaoNegadaException {
+    private Vendedor isVendedor() throws PermissaoNegadasException {
         if (usuarioLogado instanceof Vendedor vendedor) {
             return vendedor;
         }
-        throw new PermissaoNegadaException("o usuário não é um vendedor");
+        throw new PermissaoNegadasException("o usuário não é um vendedor");
     }
 
-    private void isGerente() throws PermissaoNegadaException {
+    private void isGerente() throws PermissaoNegadasException {
         if (!(usuarioLogado instanceof IGerente)) {
-            throw new PermissaoNegadaException("o usuário não é um gerente");
+            throw new PermissaoNegadasException("o usuário não é um gerente");
         }
     }
 
