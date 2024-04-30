@@ -25,7 +25,7 @@ public interface IGerente extends
             Cliente novoCliente, IBanco<Cliente, Long> banco) throws ObjetoNaoEncontradoException;
     List<Vendedor> verVendedores(IBanco<Cliente, Long> banco);
     List<Cliente> verClientes(IBanco<Cliente, Long> banco);
-    List<String> verPagamentoVendedores(IBanco<Cliente, Long> banco);
+    List<String> verPagamentoVendedores(List<Vendedor> listaVendedores);
     String verPagamentoVendedor(
             Long cpf, IBanco<Cliente, Long> banco) throws ObjetoNaoEncontradoException;
 }

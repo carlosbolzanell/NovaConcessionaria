@@ -42,7 +42,7 @@ public class AutomovelController {
         automovelService.alterar(automovel.getCODIGO(), automovel);
     }
     protected void isGerente(){
-        if(!(autenticacaoService.getUsuarioLogado() instanceof IGerente)){
+        if(!(UsuarioAutenticadoBack.getUsuarioAutenticado() instanceof IGerente)){
             throw new PermissaoNegadasException("Usuário não é um gerente");
         }
     }

@@ -11,6 +11,7 @@ public class Gerente extends Vendedor implements IGerente{
 
     public Gerente(String nome, Long cpf, String senha, Long idade, Double salario) {
         super(nome, cpf, senha, idade, salario);
+        setComissao(0.02);
     }
 
     public String menu() {
@@ -101,9 +102,9 @@ public class Gerente extends Vendedor implements IGerente{
         return banco.buscarTodos();
     }
 
-    public List<String> verPagamentoVendedores(IBanco<Cliente, Long> banco) {
+    public List<String> verPagamentoVendedores(List<Vendedor> listaVendedores) {
         List<String> listaPagamentos = new ArrayList<>();
-        for (Vendedor vendedor : verVendedores(banco)) {
+        for (Vendedor vendedor : listaVendedores) {
             listaPagamentos.add(vendedor.verPagamentoComNome());
         }
         return listaPagamentos;

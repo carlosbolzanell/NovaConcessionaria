@@ -57,7 +57,6 @@ public class Cliente implements ICliente{
 
     public void adicionarProprioAutomovel(Automovel automovel) {
         this.listaAutomoveis.add(automovel);
-        automovel.mudarStatus();
     }
     @Override
     public String toString() {
